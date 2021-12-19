@@ -731,14 +731,35 @@ const actions = {
           }, 2000);
       })
   },
-
+  getProductsListbyIDArr: state => ids => {
+    return state.filter(product => ids.includes(product.id));
+  },
   addToCartAction ({ commit }, id) {
     return new Promise((resolve, reject) => {
       commit('addToCart', id);
       commit('setAddedBtn', id);
       resolve();
     })
-  }
+  },
+  get_ProductsRecentlyViewed(){
+    const productsRecentlyViewedArr = localStorage.getItem('ProductsRecentlyViewed') || [];
+
+    return new Promise((resolve, reject) => {
+      resolve(state.filter(product => productsRecentlyViewedArr.includes(product.id)));
+    })
+  },
+  set_ProductsRecentlyViewed(id){
+    let productsRecentlyViewedArr = localStorage.getItem('ProductsRecentlyViewed') || [];
+
+    if (!productsRecentlyViewedArr.includes(id)) {
+      productsRecentlyViewedArr.unshift(id);
+      productsRecentlyViewedArr = productsRecentlyViewedArr.slice(0,3);
+      localStorage.setItem('ProductsRecentlyViewed', productsRecentlyViewedArr);
+    }
+  },
+  clear_ProductsRecentlyViewed () {
+    localStorage.removeItem('ProductsRecentlyViewed');
+  },
 };
 
 const mutations = {

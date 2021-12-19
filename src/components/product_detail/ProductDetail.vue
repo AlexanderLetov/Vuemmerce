@@ -119,6 +119,9 @@
         <p class="title is-4" style="padding-left: 120px">Similar products:</p>
         <OtherProductComponent :category="product.category" />
       </div>
+      <div>
+        <ProductsRecentlyViewed />
+      </div>
     </template>
   </section>
 </template>
@@ -129,6 +132,7 @@ import ProductDetailImagesComponent from "./ProductDetailImages";
 import OtherProductComponent from "../other_product/OtherProduct";
 import CategoriesNavigation from "../categories_nav/CategoriesNavigation";
 import Tabs from "../tabs/Tabs";
+import ProductsRecentlyViewed from "../products_recently_viewed/ProductsRecentlyViewed"
 
 export default {
   name: "product-detail-component",
@@ -206,7 +210,8 @@ export default {
         this.isLoaded = true;
 
         loadingComponent.close();
-      });
+        this.$store.dispatch("set_ProductsRecentlyViewed", this.$route.params.id);
+      })
   },
 
   computed: {
